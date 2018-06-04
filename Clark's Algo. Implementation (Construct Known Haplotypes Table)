@@ -128,7 +128,7 @@ def generateKnownHaplotypes(data):
     return(phase)
 
 def main():
-    list = ['12211','10210','10000','02100']
+    list = ['11210','01000','11110','02100','20210']
     newlist = []
     for elem in list:
         d = genotype_data()
