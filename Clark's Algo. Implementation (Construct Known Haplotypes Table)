@@ -138,6 +138,8 @@ def main():
     KnownHaplotypes = generateKnownHaplotypes(newlist)
     print(KnownHaplotypes)
 
-    # Should contain only 01000, 01100, 10110, 10100, 00000
+    # ['11210','01000','11110','02100','20210'] => Should contain only 01000, 01100, 10110, 10100, 00000
+    # ['12211','10210','10000','02100'] => Cannot be computed by Clark's Algorithm. Added phases before termination: 
+    #                                      10000, 00000, 01000, 01100, 11111
 
 main()
