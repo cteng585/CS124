@@ -97,7 +97,11 @@ def compatiblePair(CompatibleList,Genotype):
         else:
             comparingString = ''
     #If no pairs have been found, then randomly select one of the compatibleList haplotyoes and return it.
-    x = randint(0,len(CompatibleList) - 1)
+    if not CompatibleList:
+        return('')
+    x = 0
+    if len(CompatibleList) > 1:
+        x = randint(0,len(CompatibleList) - 1)
     return(CompatibleList[x])
 
 # "Master Function" Which ends up generating a unique set of Haplotypes that are described by the given set of genotypes
@@ -124,7 +128,7 @@ def generateKnownHaplotypes(data):
     return(phase)
 
 def main():
-    list = ['02100','20210','11210','01000','11110']
+    list = ['12211','10210','10000','02100']
     newlist = []
     for elem in list:
         d = genotype_data()
