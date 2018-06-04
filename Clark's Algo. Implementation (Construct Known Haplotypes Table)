@@ -1,5 +1,5 @@
-""" Class data structure section and main sections are only included for testing the code. 
-Clark's Method Implementation (doesn't calculate for genotypes with 2+ heterozygous positions 
+""" Class data structure section and main sections are only included for testing the code.
+Clark's Method Implementation (doesn't calculate for genotypes with 2+ heterozygous positions
 that are not explained by the list of "known haplotypes" """
 
 from random import *
@@ -24,7 +24,7 @@ def L2H(genotype_data):
             count += 1
     return(count)
 
-#Generates all the possible phases for genotypes that have 1 or less heterozygous positions. 
+#Generates all the possible phases for genotypes that have 1 or less heterozygous positions.
 #Adds the 2H+ genotypes to a separate list
 def generatePhases(genolist,phaselist,M2Hlist):
     for elem in range(len(genolist)):
@@ -57,7 +57,7 @@ def removedup(list):
             nodup.append(elem)
     return(nodup)
 
-#Finds the remaining haplotypes which could describe the genotypes that have more than 1 heterozygous positions, 
+#Finds the remaining haplotypes which could describe the genotypes that have more than 1 heterozygous positions,
 #using the list of known haplotypes.
 def findCompatibleHaplotype(Haplolist, Genotype):
     CompatibleHaplo = ''
@@ -106,8 +106,9 @@ def generateKnownHaplotypes(data):
     M2HList = []
     generatePhases(data,phase,M2HList)
     norepeatphase= removedup(phase)
+    phase = []
 
-#Proceed to find the remaining haplotype phases which explain the genotypes with more than one heterozygous position 
+#Proceed to find the remaining haplotype phases which explain the genotypes with more than one heterozygous position
 #only adds additional haplotypes, if pre-exiting haplotype explains the genotype.
     for elem in M2HList:
         newhaplo = findCompatibleHaplotype(norepeatphase,elem)
@@ -116,7 +117,11 @@ def generateKnownHaplotypes(data):
         else:
             if newhaplo not in norepeatphase:
                 norepeatphase.append(newhaplo)
-    return(norepeatphase)
+    for elem in norepeatphase:
+        string1 = elem.replace('2', '1')
+        phase.append(string1)
+
+    return(phase)
 
 def main():
     list = ['02100','20210','11210','01000','11110']
@@ -129,6 +134,6 @@ def main():
     KnownHaplotypes = generateKnownHaplotypes(newlist)
     print(KnownHaplotypes)
 
-    # Should contain only 02000, 02200, 20220, 20200, 00000
+    # Should contain only 01000, 01100, 10110, 10100, 00000
 
 main()
