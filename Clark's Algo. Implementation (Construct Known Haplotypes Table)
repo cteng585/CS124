@@ -97,7 +97,7 @@ def compatiblePair(CompatibleList,Genotype):
         else:
             comparingString = ''
     #If no pairs have been found, then randomly select one of the compatibleList haplotyoes and return it.
-    x = randint(0,len(CompatibleList))
+    x = randint(0,len(CompatibleList) - 1)
     return(CompatibleList[x])
 
 # "Master Function" Which ends up generating a unique set of Haplotypes that are described by the given set of genotypes
