@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+import argparse
+import random
+import operator
+import numpy as np
+
+import clarks_method
+import improved_clarks
+import lists_equal
+import assign_haplotypes
+
+def parse_args():
+    """Parse arguments to go into ataqc"""
+    
+    parser = argparse.ArgumentParser(description='Haplotype Phasing')
+    parser.add_argument('--input', help='Input file path')
+    parser.add_argument('--output', help='Output file path')
+    parser.add_argument('--window_size', help='Window size to phase with')
+    parser.add_argument('--bootstrap_value', help='Number of times to repeat Clark's to increase accuracy')
+    
+    args = parser.parse_args()
+    
+    return args
+    
+ 
+def phase_haplotypes(args):
+    genotype_list = import_data(args.input)
+    improved_clarks(genotype_list, args.window_size, args.bootstrap_value)
+    make_solution(genotype_list)
+    write_solution(genotype_list, args.output)
