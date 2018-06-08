@@ -1,0 +1,70 @@
+class Genotype_data:
+    def __init__(self,haplotype1,haplotype2):
+        self.info = [haplotype1,haplotype2,0]
+
+#Generate the first haplotype frequencies
+def generate_initial_freq(list,unique_haplo):
+    for elem in list:
+        if not elem in unique_haplo:
+            unique_haplo[elem] = 0
+    x = len(unique_haplo.keys())
+    for key in unique_haplo:
+        unique_haplo[key] = 1/x
+
+#Generate the first frequencies for the haplotype pair that makes up the genotype
+def generate_initial_pair_freqs(genotype):
+    for key,value in genotype.items():
+        x = len(list(filter(bool,value)))
+        for elem in value:
+            elem[2] = 1/x
+
+#E-step to calculate new haplotype frequencies
+def E_step(unique_haplo,data):
+    denom = 2 * len(data)
+    for haplotype in unique_haplo.keys():
+        haplo_freq = 0
+        for value in data.values():
+            for elem in value:
+                if (elem[0] == haplotype) or (elem[1] == haplotype):
+                    haplo_freq += elem[2]
+                    break
+        unique_haplo[haplotype] = haplo_freq/denom
+
+def M_step(unique_haplo,data):
+    new_freq = []
+    for value in data.values():
+        numerator_geno = []
+        for elem in value:
+            numerator = 1
+            numerator = numerator * unique_haplo.get(elem[0]) * unique_haplo.get(elem[1])
+            numerator_geno.append(numerator)
+        denominator = sum(numerator_geno)
+        print(numerator_geno)
+        for i in numerator_geno:
+            i = i/denominator
+            new_freq.append(i)
+            
+def main():
+    list = ['00100','01110','01100','00110','00111','10111','00000','00110','00100','00010']
+    unique_haplo = {}
+    generate_initial_freq(list,unique_haplo)
+
+    data = dict()
+    #Add the genotype data to a dictionary
+    a = Genotype_data('00100','01110')
+    b = Genotype_data('01100','00110')
+    data['01210'] = [a.info]
+    data['01210'].append(b.info)
+    c = Genotype_data('00111','10111')
+    d = Genotype_data('00000','00110')
+    e = Genotype_data('00100','00010')
+    data['10222'] = [c.info]
+    data['00110'] = [d.info]
+    data['00110'].append(e.info)
+
+    generate_initial_pair_freqs(data)
+    E_step(unique_haplo,data)
+    M_step(unique_haplo,data)
+
+
+main()
