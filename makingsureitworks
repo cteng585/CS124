@@ -1,0 +1,49 @@
+import numpy as np
+
+class genotype():
+    def __init__(self,genotype, haplotype1, haplotype2):
+        self.genotype = genotype
+        self.haplotype1 = haplotype1
+        self.haplotype2 = haplotype2
+
+f = open('example_data_1.txt', 'r')
+data = []
+for line in f:
+    individual = []
+    line_content = line.strip()
+    for snp in line_content.split(' '):
+        if len(snp) != 0:
+            individual.append(int(snp))
+
+    data.append(individual)
+myarray = np.array(data)
+true_data = np.transpose(myarray)
+
+genotypes = []
+for i in range(true_data.shape[0]):
+    genotypes.append(genotype(true_data[i,:], [], []))
+
+print(len(genotypes[0].genotype))
+
+def import_data(filename):
+    f = open('example_data_1.txt', 'r')
+    data = []
+    for line in f:
+        individual = []
+        line_content = line.strip()
+        for snp in line_content.split(' '):
+            if len(snp) != 0:
+                individual.append(int(snp))
+
+        data.append(individual)
+    myarray = np.array(data)
+    true_data = np.transpose(myarray)
+
+    genotypes = []
+    for i in range(true_data.shape[0]):
+        genotypes.append(genotype(true_data[i, :], [], []))
+
+    return genotypes
+
+genotype_list = import_data("example_data_1.txt")
+print(len(genotypes[1].genotype))
