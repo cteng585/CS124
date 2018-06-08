@@ -1,3 +1,7 @@
+import operator
+import random
+import numba as nb
+
 def improved_clarks(genotype_list, window_size, bootstrap_value):
 	windows = len(genotype_list[0].genotype) // window_size
 	for window_idx in xrange(windows):
